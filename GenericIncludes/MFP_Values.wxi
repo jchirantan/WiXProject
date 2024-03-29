@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!-- Versioning. These have to be changed for upgrades.  -->
+  <?define MajorVersion="3" ?>
+  <!-- V.r.m.f -->
+  <?define MinorVersion="0" ?>
+  <!-- v.R.m.f -->
+  <?define BuildVersion="1" ?>
+  <!-- v.r.M.f -->
+  <?define Revision="3" ?>
+  <!-- v.r.m.F -->
+  <!-- NOTE: Revision is NOT used by WiX in the upgrade procedure -->
+  <!-- Full version number to display -->
+  <?define VRMFdots="$(var.MajorVersion).$(var.MinorVersion).$(var.BuildVersion).$(var.Revision)" ?>
+  <?define VRMFnodots="$(var.MajorVersion)$(var.MinorVersion)$(var.BuildVersion)$(var.Revision)" ?>
+
+  <!-- Product Name combinations-->
+  <?define ProdName="Dummy AAA" ?>
+  <?define ProdNameShort="AAA" ?>
+  <?define ProdNameSuffix="" ?>
+  <?define ProdFullName="$(var.ProdName) $(var.VRMFdots)$(var.ProdNameSuffix)" ?>
+
+  <!-- Dummy ABC and XYZ Product name, for finding registry entries. -->
+  <?define XYZProdName="Dummy XYZ" ?>
+  <?define ABCProdName="Dummy ABC" ?> 
+
+  <!-- Folder paths -->
+  <?define localRootDir_ReplacedAtBuild="C:\ci\mfp\obj\package\WIX_MFP_Project\dummylocalWIXfiles" ?>
+  <?define buildRootDir="C:\ci\mfp\obj\package\WIX_MFP_Build" ?>
+
+  <?define MFPRootDir="$(var.localRootDir_ReplacedAtBuild)" ?>
+  <?define ImagesDir="..\images\" ?>
+  <?define LicRTFDir="..\..\license\rtf" ?>
+  
+  <!-- Product and Upgrade GUIDs - difference for all 'parts' (read MSIs) and needs to be different for each build -->
+  <?define BundleUpgradeCode="E6200C2E-93A0-4071-9C5F-3BBF5F6155F1" ?>
+  <!-- MFP GUIDS-->
+ <!-- <?define MFP_EXT_PROFILE_GUID="D10C794A-2C95-4540-86C4-4D9DC8CF7239" ?>  -->
+  <?define MFP_EVENT_LOG_GUID="6666A2B3-0B48-4123-8200-37348F830DA0" ?>
+  <!-- Change REG_VER_LOC_GUID for every release -->
+  <?define REG_VER_LOC_GUID="4BBDF395-2AA1-4AB6-84E0-D5730928499A" ?>
+  <?define MFP_UpgradeCode="25E2B849-0200-4C59-B455-37AE220565C7" ?>
+ </Include>
+

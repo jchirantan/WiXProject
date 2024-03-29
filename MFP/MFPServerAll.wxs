@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include ..\GenericIncludes\MFP_Values.wxi?>
+  <Fragment>
+    <DirectoryRef Id="MFPTARGETDIR">
+      <Directory Id="dir444B8F3C953B9DF0D971BDF149F09716" Name="eclipse">
+        <Component Id="cmpC339B328326E8C6A4FE33340332EEF80" KeyPath="yes" Guid="{7AA11021-160A-4241-BB29-0C6E37AB6030}">
+          <File Id="filDE636FC219C199097E83ED84718179A7" Source="$(var.MFPRootDir)\eclipse\.eclipseextension" />
+          <File Id="filD48C608EC8FC9D1BAD76A2F80D14279F" Source="$(var.MFPRootDir)\eclipse\level.txt" />
+        </Component>
+      </Directory>
+      <Directory Id="dirEF0C2509EDD7C54D2EC6D4B2AB21A2AB" Name="images">
+        <Component Id="cmp86AAC70A96B3F63CBAE67D976B1CC878" KeyPath="yes" Guid="{575AD773-7E50-4823-B3C3-D6CCBED239BD}">
+          <File Id="fil54EA2E26AEDC81F43F2F02B22A649CE4" Source="$(var.MFPRootDir)\images\activeLabelIcon.png" />
+          <File Id="fil71EAE88EC16E1B062981B393163759A0" Source="$(var.MFPRootDir)\images\completedLabelIcon.png" />
+          <File Id="filD57FFBEE0BD99E1922E2FD702313C654" Source="$(var.MFPRootDir)\images\XYZMP2-0.jpg" />
+          <File Id="filB12DF3F992CBAF67DCC081C4CCECE87A" Source="$(var.MFPRootDir)\images\installer_background.gif" />
+          <File Id="fil41859E7390B668608306B07224C66A12" Source="$(var.MFPRootDir)\images\installer_billboard.png" />
+          <File Id="filF2BCE82330D4273C3699F720CB4782D9" Source="$(var.MFPRootDir)\images\installIcon.gif" />
+          <File Id="fil86BD7E2123B02B3B260FE19B2AA0E30E" Source="$(var.MFPRootDir)\images\installIconSmall.gif" />
+          <File Id="filBF9A4FCBD1C1479702D66C928E79DB89" Source="$(var.MFPRootDir)\images\upcomingLabelIcon.png" />
+          <File Id="fil0E45B5AA4719B5606F6C3EFD8F6325E0" Source="$(var.MFPRootDir)\images\ws.gif" />
+        </Component>
+      </Directory>
+      <Directory Id="dirA55A3074BA628741667DC3E84657AD55" Name="license">
+        <Directory Id="dir783172DF6484050AEFBBEE35C93AA92A" Name="agreement">
+          <Component Id="cmp338CBDFB9AD1B7F435C2A9A02A25ECC8" KeyPath="yes" Guid="{BF962E73-ED79-42AC-9961-0212923417D4}">
+            <File Id="filA41A5AA2C92B19366C3FC957BE14FE8D" Source="$(var.MFPRootDir)\license\agreement\LA_cs" />
+            <File Id="fil01BDA58E828AC4DA0FCFDF7C0C0CE197" Source="$(var.MFPRootDir)\license\agreement\LA_de" />
+            <File Id="fil172907CA0658D994FA1B63516CE2BE11" Source="$(var.MFPRootDir)\license\agreement\LA_el" />
+            <File Id="fil975D4C030B8CCBAAB090A4520DC47354" Source="$(var.MFPRootDir)\license\agreement\LA_en" />
+            <File Id="fil07C892B8F3EA224E2C35B279E5786A08" Source="$(var.MFPRootDir)\license\agreement\LA_es" />
+            <File Id="filB2FEFCD0F07E5ED8F77AF0AAD36DF170" Source="$(var.MFPRootDir)\license\agreement\LA_fr" />
+            <File Id="fil18F6FFC5B0D5ADB9CB5DBEC1B1C76AD1" Source="$(var.MFPRootDir)\license\agreement\LA_in" />
+            <File Id="fil83926AD5E81963D2A2F74C3A4374D047" Source="$(var.MFPRootDir)\license\agreement\LA_it" />
+            <File Id="filD9BF0EF51B2870F5A0948290CF3DE88B" Source="$(var.MFPRootDir)\license\agreement\LA_ja" />
+            <File Id="fil5F4321899E6AA3E1CA0F4C8E0B732959" Source="$(var.MFPRootDir)\license\agreement\LA_ko" />
+            <File Id="filD40CADC34BEA2EE6AF0D4D8A9AC18662" Source="$(var.MFPRootDir)\license\agreement\LA_lt" />
+            <File Id="fil7115C78D77100869DF91B4A391A5145B" Source="$(var.MFPRootDir)\license\agreement\LA_pl" />
+            <File Id="fil9CB15C49593035A6B800ABA099429FDD" Source="$(var.MFPRootDir)\license\agreement\LA_pt" />
+            <File Id="filE4B57AE4CE28E686F7B9DEF67830179A" Source="$(var.MFPRootDir)\license\agreement\LA_ru" />
+            <File Id="fil2FF9DD6806481E5E8A84776C2C6DC8B1" Source="$(var.MFPRootDir)\license\agreement\LA_sl" />
+            <File Id="fil15A93FDE753CD8E53A2909CE2199F184" Source="$(var.MFPRootDir)\license\agreement\LA_tr" />
+            <File Id="fil027A846B9ECCC3283DBF4066BF5E8F29" Source="$(var.MFPRootDir)\license\agreement\LA_zh" />
+            <File Id="fil805059363425A2A37F304CB3B7891A5E" Source="$(var.MFPRootDir)\license\agreement\LA_zh_TW" />
+            <File Id="fil1BA5DD9D5300A032ECD3234CA19F09A9" Source="$(var.MFPRootDir)\license\agreement\LI_cs" />
+            <File Id="filE60BE6C3378504BEC44562867AA8C4F5" Source="$(var.MFPRootDir)\license\agreement\LI_de" />
+            <File Id="fil2832DB148E03AE5E5FD80502A264C254" Source="$(var.MFPRootDir)\license\agreement\LI_el" />
+            <File Id="fil7E1AF691EB488DA08B99D048A3F8A0E3" Source="$(var.MFPRootDir)\license\agreement\LI_en" />
+            <File Id="fil1C6B87F4439DD68D727F8E731D95233B" Source="$(var.MFPRootDir)\license\agreement\LI_es" />
+            <File Id="fil524E687636569306EFE6A14AC1C1C1E6" Source="$(var.MFPRootDir)\license\agreement\LI_fr" />
+            <File Id="fil7B94CA1CE0108B1E3A458CFF35E7C735" Source="$(var.MFPRootDir)\license\agreement\LI_in" />
+            <File Id="filD07776D584F946B85954E263AE21297B" Source="$(var.MFPRootDir)\license\agreement\LI_it" />
+            <File Id="filFE5537BFAD7BB768D8D2D4DC8D715A6F" Source="$(var.MFPRootDir)\license\agreement\LI_ja" />
+            <File Id="fil80275AF21A980D911506665CF2BAE56F" Source="$(var.MFPRootDir)\license\agreement\LI_ko" />
+            <File Id="fil9F45D067498D756A0CACBB6CEA53FB56" Source="$(var.MFPRootDir)\license\agreement\LI_lt" />
+            <File Id="fil845A464FE4B55C47F1BD7A57EB5D5C87" Source="$(var.MFPRootDir)\license\agreement\LI_pl" />
+            <File Id="fil265482277E4A4745C0626500F490ACFB" Source="$(var.MFPRootDir)\license\agreement\LI_pt" />
+            <File Id="filC104B77ACB8F97D50458EEB47DBF1320" Source="$(var.MFPRootDir)\license\agreement\LI_ru" />
+            <File Id="fil8A9566A0689DD852B3D949D4AFE86060" Source="$(var.MFPRootDir)\license\agreement\LI_sl" />
+            <File Id="filDC05C597521DCBC9E949BC392D2B98DC" Source="$(var.MFPRootDir)\license\agreement\LI_tr" />
+            <File Id="fil0343F1C058CF4D6DC85B1C4C7A587C71" Source="$(var.MFPRootDir)\license\agreement\LI_zh" />
+            <File Id="fil32C5E1F7A0CB8AEC712DD3E7ECA36D8B" Source="$(var.MFPRootDir)\license\agreement\LI_zh_TW" />
+            <File Id="fil7AC1DC902FF3F31B7C8407E3F18BC82E" Source="$(var.MFPRootDir)\license\agreement\notices" />
+            <File Id="fil82BE8FE778BEC4E81DEC04078F5AA3C4" Source="$(var.MFPRootDir)\license\agreement\REDIST.txt" />
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="dirDD7E0054B5C7CC05AE9A1331C430BA30" Name="properties">
+        <Component Id="cmpD95FA91957065A96BCEF251E83A1D635" KeyPath="yes" Guid="{992727C2-7D4C-49E1-B8CC-92749AAA833D}">
+          <CreateFolder />
+        </Component>
+      </Directory>
+      <Directory Id="dirA33FB6FF49B1C06E4D964317842A3391" Name="readmes">
+        <Component Id="cmp9893D53A934E1CDD9177DF943720BE0C" KeyPath="yes" Guid="{6D107A70-CF53-47B7-A5D9-CDFFECB6AA43}">
+          <File Id="fil91C90781AA0DC26A278B71D575786DAE" Source="$(var.MFPRootDir)\readmes\README.txt" />
+        </Component>
+      </Directory>
+      <Directory Id="dirF12527DA16D991D9853CAE0986FB5E9E" Name="runtime">
+        <Component Id="cmpDDA782D15A52B54D9BC98D913D84CE56" KeyPath="yes" Guid="{A47EAAF6-0DA5-4ACE-8C79-BACE275B9E6E}">
+          <File Id="filA7A20A97EA1A5BB99147C26152A7FCCC" Source="$(var.MFPRootDir)\runtime\CreateToolkitLink.cmd" />
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="MFPImages">
+      <ComponentRef Id="cmpC339B328326E8C6A4FE33340332EEF80" />
+      <ComponentRef Id="cmp86AAC70A96B3F63CBAE67D976B1CC878" />
+      <ComponentRef Id="cmp338CBDFB9AD1B7F435C2A9A02A25ECC8" />
+      <ComponentRef Id="cmpD95FA91957065A96BCEF251E83A1D635" />
+      <ComponentRef Id="cmp9893D53A934E1CDD9177DF943720BE0C" />
+      <ComponentRef Id="cmpDDA782D15A52B54D9BC98D913D84CE56" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>
+<!-- 
+**PROCESSING INFO
+**EmptyFolders: 132
+**Component Count: 962
+**Included Dir Count: 1116
+**Included File Count: 4503
+**Excluded File Count: 0
+ -->

@@ -1,0 +1,6 @@
+The file 'MFPServerAll.wxs' is over-written at build time.
+So this checked in version is only need for dummy local building of the MFP installer.
+
+Please do not over-write it.
+
+Thanks Antony

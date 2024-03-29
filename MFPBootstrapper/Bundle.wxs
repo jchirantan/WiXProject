@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <?include ..\GenericIncludes\MFP_Values.wxi ?>
+
+  <Bundle Name="$(var.ProdFullName)"
+          Version="$(var.VRMFdots)"
+          Manufacturer="Dummy"
+          UpgradeCode="$(var.BundleUpgradeCode)"
+          SplashScreenSourceFile="$(var.ImagesDir)XYZMP2-0.bmp"
+          Copyright="Copyright 2019, Dummy"
+          IconSourceFile="$(var.ImagesDir)ws.ico"
+          Tag="[InstallFolder]"
+          >
+
+    <bal:Condition Message="!(loc.WindowsVersionErrorMsg)">(VersionNT >= v6.1)</bal:Condition>
+    <bal:Condition Message="!(loc.WindowsBittnessErrorMsg)">VersionNT64</bal:Condition>
+    
+    <!--Detect the Dummy XYZ installed in the machine using RegistrySearch.
+      If it is found, set the path to Dummy XYZ directory as default; 
+      otherwise, show error message to ask user to install Dummy XYZ in advance.
+    -->
+    <util:RegistrySearch Root="HKLM" 
+                         Key="SOFTWARE\Dummy\$(var.ABCProdName)" 
+                         Result="exists"
+                         Variable="ABCDefaultPath" 
+                         Win64="yes"/>
+   <util:RegistrySearch Root="HKLM" 
+                         Key="SOFTWARE\Dummy\$(var.ProdName)" 
+                         Result="exists"
+                         Variable="XYZDefaultPath" 
+                         Win64="yes"/>
+   
+    
+    <bal:Condition Message="!(loc.ABC_NOTInstalledErrorMsg)">XYZDefaultPath OR ABCDefaultPath</bal:Condition> 
+    
+    <Variable Name="InstallFolder"
+              Value="[ProgramFiles64Folder]Dummy\AAA\$(var.VRMFdots)\"
+              Persisted="yes"
+              bal:Overridable="yes"
+              Type="string" />
+
+    <Variable Name="LICENSE_ACCEPTED"
+              Value="false"
+              Persisted="yes"
+              bal:Overridable="yes"
+              Type="string" />
+
+    <Variable Name="EulaAcceptCheckbox"
+              Value="0"
+              Persisted="yes"
+              bal:Overridable="no"
+              Type="numeric" />
+    
+    <!--Detect if 'we' (as in any v2 MFP version) is already installed -->
+		 <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Dummy\$(var.ProdName)\$(var.VRMFdots)" Result="exists" Variable="VRMFAlreadyInstalled" Win64="yes"  />
+    <!-- <bal:Condition Message="!(loc.AlreadyInstalledErrorMsg)">NOT (VRMFAlreadyInstalled AND (WixBundleInstalled = 0))</bal:Condition>  
+      -->
+          
+    <!-- Get the ABC v10.0.0.0 and XYZ V11 directory -->
+    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Dummy\$(var.XYZProdName)\11.0.0.6" Value="install_location" Variable="XYZv11_Folder" Win64="yes"  />
+    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Dummy\$(var.ABCProdName)\10.0.0.16" Value="install_location" Variable="ABCv10_Folder" Win64="yes"  />     
+    <!-- GUI 'Theme' settings -->
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" >
+      <bal:WixStandardBootstrapperApplication
+        LogoFile="$(var.ImagesDir)installicon.png"
+        LicenseFile="$(var.LicRTFDir)\LA_en.rtf"
+        SuppressDowngradeFailure="no"
+        SuppressOptionsUI="no"
+        ShowVersion="yes"
+        SuppressRepair="yes"/>
+
+      <Payload Id="thm_xml" SourceFile="$(var.ProjectDir)\ABCMF_Theme.xml" Name="thm.xml" SuppressSignatureVerification="yes" Compressed="yes" />
+
+      <!-- LCID reference: <http://msdn.microsoft.com/en-us/goglobal/bb895996> -->
+
+      <!-- Translations -->
+      <!-- <Payload Id="thm_cs-CZ" SourceFile="$(var.ProjectDir)Localizations\1029 cs-CZ\mbapreq.wxl" Name="1029\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" /> -->
+      <Payload Id="thm_de-DE" SourceFile="$(var.ProjectDir)Localizations\1031 de-DE\mbapreq.wxl" Name="1031\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <!-- <Payload Id="thm_el-GR" SourceFile="$(var.ProjectDir)Localizations\1032 el-GR\mbapreq.wxl" Name="1032\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" /> -->
+      <Payload Id="thm_en-US" SourceFile="$(var.ProjectDir)Localizations\1033 en-US\RtfTheme.wxl" Name="1033\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="thm_es-ES" SourceFile="$(var.ProjectDir)Localizations\3082 es-ES\mbapreq.wxl" Name="3082\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="thm_fr-fr" SourceFile="$(var.ProjectDir)Localizations\1036 fr-FR\mbapreq.wxl" Name="1036\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <!-- <Payload Id="thm_id-ID" SourceFile="$(var.ProjectDir)Localizations\1057 id-ID\mbapreq.wxl" Name="1057\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" /> -->
+      <Payload Id="thm_it-IT" SourceFile="$(var.ProjectDir)Localizations\1040 it-IT\mbapreq.wxl" Name="1040\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="thm_ja-JP" SourceFile="$(var.ProjectDir)Localizations\1041 ja-JP\mbapreq.wxl" Name="1041\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="thm_ko-KR" SourceFile="$(var.ProjectDir)Localizations\1042 ko-KR\mbapreq.wxl" Name="1042\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <!-- <Payload Id="thm_lt-LT" SourceFile="$(var.ProjectDir)Localizations\1063 lt-LT\mbapreq.wxl" Name="1063\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" /> -->
+      <Payload Id="thm_pl-PL" SourceFile="$(var.ProjectDir)Localizations\1045 pl-PL\mbapreq.wxl" Name="1045\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="thm_pt-BR" SourceFile="$(var.ProjectDir)Localizations\1046 pt-BR\mbapreq.wxl" Name="1046\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="thm_ru-RU" SourceFile="$(var.ProjectDir)Localizations\1049 ru-RU\mbapreq.wxl" Name="1049\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <!-- <Payload Id="thm_sl-SI" SourceFile="$(var.ProjectDir)Localizations\1060 sl-SI\mbapreq.wxl" Name="1060\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" /> -->
+      <Payload Id="thm_tr-TR" SourceFile="$(var.ProjectDir)Localizations\1055 tr-TR\mbapreq.wxl" Name="1055\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="thm_zh-TW" SourceFile="$(var.ProjectDir)Localizations\1028 zh-TW\mbapreq.wxl" Name="1028\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="thm_zh-CHS" SourceFile="$(var.ProjectDir)Localizations\2052 zh-CHS\mbapreq.wxl" Name="2052\thm.wxl" SuppressSignatureVerification="yes" Compressed="yes" />
+
+      <!-- RTF Licences -->
+      <!-- <Payload Id="lic_cs-CZ" SourceFile="$(var.LicRTFDir)\LA_cs.rtf" Name="1029\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" /> -->
+      <Payload Id="lic_de-DE" SourceFile="$(var.LicRTFDir)\LA_de.rtf" Name="1031\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <!-- <Payload Id="lic_el-GR" SourceFile="$(var.LicRTFDir)\LA_el.rtf" Name="1032\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" /> -->
+      <Payload Id="lic_en-US" SourceFile="$(var.LicRTFDir)\LA_en.rtf" Name="1033\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_es-ES" SourceFile="$(var.LicRTFDir)\LA_es.rtf" Name="3082\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_fr-FR" SourceFile="$(var.LicRTFDir)\LA_fr.rtf" Name="1036\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_id-ID" SourceFile="$(var.LicRTFDir)\LA_in.rtf" Name="1057\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_it-IT" SourceFile="$(var.LicRTFDir)\LA_it.rtf" Name="1040\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_ja-JP" SourceFile="$(var.LicRTFDir)\LA_ja.rtf" Name="1041\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_ko-KR" SourceFile="$(var.LicRTFDir)\LA_ko.rtf" Name="1042\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_lt-LT" SourceFile="$(var.LicRTFDir)\LA_lt.rtf" Name="1063\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_pl-PL" SourceFile="$(var.LicRTFDir)\LA_pl.rtf" Name="1045\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_pt-BR" SourceFile="$(var.LicRTFDir)\LA_pt.rtf" Name="1046\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_ru-RU" SourceFile="$(var.LicRTFDir)\LA_ru.rtf" Name="1049\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_sl-SI" SourceFile="$(var.LicRTFDir)\LA_sl.rtf" Name="1060\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_tr-TR" SourceFile="$(var.LicRTFDir)\LA_tr.rtf" Name="1055\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_zh-CHS" SourceFile="$(var.LicRTFDir)\LA_zh.rtf" Name="2052\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+      <Payload Id="lic_zh-TW" SourceFile="$(var.LicRTFDir)\LA_zh_TW.rtf" Name="1028\license.rtf" SuppressSignatureVerification="yes" Compressed="yes" />
+    </BootstrapperApplicationRef>
+
+
+    <Chain>
+      <!--Define the list of chained packages.-->
+
+      <!-- DUMMY install package (that does not exist!) to make sure the license has been accepted -->
+      <!-- The installer will blow-up if the lic has not been accepted because this pacakge does not actually exist (but must exist at project build time)-->
+      <!-- Sadly we've [mgk/antfurn] have not found any other way to accomplish this in a 'nice' way :-( -->
+      <!-- NOTE: the '~' in the condition means do a case insensitive compare :-) -->
+      <ExePackage Id="_____Must_Accept_License_____"
+                  SourceFile="$(var.ImagesDir)Must_Accept_License"
+                  Compressed="yes"
+                  Cache="no"
+                  Vital="yes"
+                  InstallCondition="(EulaAcceptCheckbox = 0) AND (LICENSE_ACCEPTED ~&lt;&gt; &quot;true&quot;)">
+      </ExePackage>
+      <RollbackBoundary />
+      
+      <MsiPackage Id="MFP"
+                 SourceFile="$(var.ProjectDir)..\MFP\bin\x64\Release\MFP.msi"
+                 Compressed="yes"
+                 Cache="no"
+                 Vital="yes">
+        <MsiProperty Name="ABCTARGETDIR" Value="[ABCv10_Folder]"  />
+        <MsiProperty Name="XYZTARGETDIR" Value="[XYZv11_Folder]"/> 
+        <MsiProperty Name="MFPTARGETDIR" Value="[InstallFolder]"/>
+        <MsiProperty Name="MFPLICACCPETED" Value="[LICENSE_ACCEPTED]"/>
+        <MsiProperty Name="MFPEULACHECKED" Value="[EulaAcceptCheckbox]"/>
+      </MsiPackage>
+      <RollbackBoundary />
+
+      <ExePackage Id="MFP_CreateToolkitLinks"
+                  SourceFile="$(var.ProjectDir)..\CreateMFPToolkitLinks\bin\x64\Release\CreateMFPToolkitLinks.exe"
+                  Compressed="yes"
+                  Cache="yes"
+                  Vital="yes"
+                  InstallCommand="-create &quot;[InstallFolder]"
+                  UninstallCommand="-remove &quot;[InstallFolder]"
+                  DetectCondition="VRMFAlreadyInstalled">
+      </ExePackage> 
+    </Chain>
+  </Bundle>
+</Wix>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProductVersion>3.9</ProductVersion>
+    <ProjectGuid>E6200C2E-93A0-4071-9C5F-3BBF5F6155F1</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>AAASetup</OutputName>
+    <OutputType>Bundle</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>
+    </DefineConstants>
+  </PropertyGroup>
+  <!--<PropertyGroup>
+    <SignOutput>true</SignOutput>
+  </PropertyGroup>  -->
+  <ItemGroup>
+    <Compile Include="Bundle.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixBalExtension">
+      <HintPath>$(WixExtDir)\WixBalExtension.dll</HintPath>
+      <Name>WixBalExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localizations\1033 en-US\RtfTheme.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="abcMF_Theme.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Localizations\" />
+    <Folder Include="Localizations\1033 en-US\" />
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <PropertyGroup>
+    <PreBuildEvent><!-- $(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1033 en-US\RtfTheme.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_en
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1028 zh-TW\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_zh_TW
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1031 de-DE\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_de
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1036 fr-FR\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_fr
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1040 it-IT\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_it
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1041 ja-JP\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_ja
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1042 ko-KR\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_ko
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1045 pl-PL\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_pl
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1046 pt-BR\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_pt
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1049 ru-RU\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_ru
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1055 tr-TR\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_tr
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1063 lt-LT\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_lt
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\2052 zh-CHS\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_zh
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\3082 es-ES\mbapreq.wxl" [REPLACE_AT_BUILD_USEAGE] $(ProjectDir)..\..\license\restrictions\LA_es -->
+  </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1033 en-US\RtfTheme.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1028 zh-TW\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1031 de-DE\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1036 fr-FR\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1040 it-IT\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1041 ja-JP\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1042 ko-KR\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1045 pl-PL\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1046 pt-BR\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1049 ru-RU\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1055 tr-TR\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\1063 lt-LT\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\2052 zh-CHS\mbapreq.wxl"
+$(ProjectDir)replaceTxtWithFile.vbs "$(ProjectDir)Localizations\3082 es-ES\mbapreq.wxl"</PostBuildEvent>
+  </PropertyGroup>
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.-->
+  <!-- <Target Name="UsesFrameworkSdk">
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="Path" PropertyName="FrameworkSdkPath" />
+    </GetFrameworkSdkPath>
+    <PropertyGroup>
+      <WinSDK>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs\Windows\@CurrentInstallFolder)</WinSDK>
+    </PropertyGroup>
+  </Target>
+  <Target Name="UsesSignTool" DependsOnTargets="UsesFrameworkSdk">
+    <PropertyGroup>
+      <SignToolPath Condition="('@(SignToolPath)'=='') and Exists('$(FrameworkSdkPath)bin\signtool.exe')">$(FrameworkSdkPath)bin\signtool.exe</SignToolPath>
+      <SignToolPath Condition="('@(SignToolPath)'=='') and Exists('$(WinSDK)\bin\signtool.exe')">$(WinSDK)\bin\signtool.exe</SignToolPath>
+      <SignToolPath Condition="('@(SignToolPath)'=='') and Exists('C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin\signtool.exe')">C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin\signtool.exe</SignToolPath>
+    </PropertyGroup>
+  </Target>
+  <Target Name="SignBundleEngine" DependsOnTargets="UsesSignTool">
+    <Exec Command='&quot;$(SignToolPath)&quot; sign /t http://timestamp.verisign.com/scripts/timstamp.dll /sha1 $(Signing_Sha1) &quot;@(SignBundleEngine)&quot;' />
+  </Target>
+  <Target Name="SignBundle" DependsOnTargets="UsesSignTool">
+    <Exec Command="&quot;$(SignToolPath)&quot; sign /d &quot;MFPSetup&quot; /t http://timestamp.verisign.com/scripts/timstamp.dll /sha1 $(Signing_Sha1) &quot;@(SignBundle)&quot;" />
+  </Target> -->
+</Project>

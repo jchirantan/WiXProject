@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix RequiredVersion="3.8.1128.0" xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include ..\GenericIncludes\MFP_Values.wxi ?>
+  <Product Id="*"
+           Name="$(var.ProdFullName)"
+           Language="1033"
+           Version="$(var.VRMFdots)"
+           Manufacturer="Dummy"
+           UpgradeCode="$(var.MFP_UpgradeCode)">
+
+    <Package InstallerVersion="500"
+             Compressed="yes"
+             InstallScope="perMachine"
+             Comments="(c) Dummy"
+             Manufacturer="Dummy"
+             Description="$(var.ProdFullName)"/>
+    
+   <MajorUpgrade
+	DowngradeErrorMessage="A newer version of [ProductName] is already installed."
+	  />  
+ 
+   <!--  <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." 
+   AllowSameVersionUpgrades="yes"/>  -->
+    <MediaTemplate />
+    
+    <Feature Id="ProductFeature" Title="AAA" Level="1">
+      <ComponentGroupRef Id="MFPImages"/>
+      <ComponentGroupRef Id="MFPProductComponents" />
+      <ComponentGroupRef Id="MFPEventLogRegistrations"/>
+      <ComponentGroupRef Id="MFP_RegMFPver_loc"/>
+    </Feature>
+
+	<Property Id="UNINSTALLTYPE" Value="RemoveAll" />
+		
+	<UIRef Id="MyWixUI_InstallDir" />
+	<UIRef Id="WixUI_ErrorProgressText" />
+
+    <Property Id="WIXUI_INSTALLDIR" Value="MFPTARGETDIR"/>
+
+
+    <!--Check ABC and XYZ directory (user input) exists or not-->
+    <Property Id="PRECHECK_ABCTOOLSDIR">
+      <DirectorySearch Id="ABCFolder" Path="[ABCTARGETDIR]"/>
+    </Property>
+    
+    <Property Id="PRECHECK_XYZTOOLSDIR">
+      <DirectorySearch Id="XYZFolder" Path="[XYZTARGETDIR]"/>
+    </Property>  
+    <Condition Message="You must enter the directory in which ABC or Dummy XYZ is installed."><![CDATA[Installed OR PRECHECK_ABCTOOLSDIR]]></Condition>
+    
+    
+    <!--Check ABC and XYZ toolkit extended to manufacturing pack or not-->
+    <Property Id="PRECHECK_ABCTOOLSLINKFILE">
+      <DirectorySearch Id="ABCFolder2" Path="[XYZTARGETDIR]">
+        <DirectorySearch Id="ABCToolsFolder" Path="tools">
+          <DirectorySearch Id="ABCToolsLinksFolder" Path="links">
+            <FileSearch Id="ABCToolsLinkFile" Name="dummy.v2.link"/>
+          </DirectorySearch>
+        </DirectorySearch>
+      </DirectorySearch>
+    </Property> 
+    
+    <!--   <Property Id="PRECHECK_XYZTOOLSLINKFILE">
+      <DirectorySearch Id="XYZFolder2" Path="[XYZTARGETDIR]">
+        <DirectorySearch Id="XYZToolsFolder" Path="tools">
+          <DirectorySearch Id="XYZToolsLinksFolder" Path="links">
+            <FileSearch Id="XYZToolsLinkFile" Name="dummy.v2.link"/>
+          </DirectorySearch>
+        </DirectorySearch>
+      </DirectorySearch>
+    </Property> --> 
+    
+  </Product>
+
+  <!--Main directory structure-->
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <!--ABC directory structure-->
+      <Directory Id="ABCTARGETDIR" Name="ABC"/>
+      <Directory Id="XYZTARGETDIR" Name="XYZ"/>
+      <!--MFP directory structure-->
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="DUMMYTARGETDIR" Name="Dummy">
+          <Directory Id="MFPTARGETROOTDIR" Name="AAA">
+            <Directory Id="MFPTARGETDIR" Name="$(var.VRMFdots)"/>
+          </Directory>
+        </Directory>
+      </Directory>
+      <!--ABC work path directory structure-->
+      <Directory Id="CommonAppDataFolder" Name="ProgramData">
+        <Directory Id="dummyFolder" Name="Dummy">
+          <Directory Id="mqsiFolder" Name="MQSI">
+            <Directory Id="commonFolder" Name="common" />
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="RegMFPver_loc"/>
+    </Directory>
+  </Fragment>
+  
+  <Fragment>
+    <ComponentGroup Id="MFPProductComponents">
+      <!--<ComponentRef Id="RemoveToolkitLinkFile"/>-->
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+	<UI Id="UninstallOptions">
+	  <Dialog Id="YourDialog" Width="370" Height="270" Title="Uninstall Options">
+		<Control Id="RadioGroup" Type="RadioButtonGroup" Property="UNINSTALLTYPE" X="20" Y="70" Width="330" Height="50">
+		  <RadioButtonGroup Property="UNINSTALLTYPE">
+			<RadioButton Value="RemoveAll" X="0" Y="0" Width="330" Height="17" Text="Remove all files and settings"/>
+			<RadioButton Value="KeepSettings" X="0" Y="20" Width="330" Height="17" Text="Keep settings and only remove files"/>
+		  </RadioButtonGroup>
+		</Control>
+		<Control Id="Next" Type="PushButton" X="200" Y="243" Width="66" Height="17" Default="yes" Text="Next"/>
+		<Control Id="Back" Type="PushButton" X="270" Y="243" Width="56" Height="17" Cancel="yes" Text="Back"/>
+	  </Dialog>
+	</UI>
+    <UI Id="MyWixUI_InstallDir">
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WixUI_Mode" Value="InstallDir" />
+      <DialogRef Id="BrowseDlg" />
+      <DialogRef Id="DiskCostDlg" />
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+      <DialogRef Id="YourDialog" />
+      <Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath" Order="3">1</Publish>
+      <Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4"><![CDATA[WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>          
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">Installed AND PATCH</Publish>
+      <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+      <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg">LicenseAccepted = "1"</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="YourDialog" Order="4">WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID="1"</Publish>
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
+      <Publish Dialog="YourDialog" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="YourDialog" Control="Back" Event="NewDialog" Value="InstallDirDlg">1</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="YourDialog" Value="InstallDirDlg" Order="1">NOT Installed</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed AND NOT PATCH</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">Installed AND PATCH</Publish>
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+      <Property Id="ARPNOMODIFY" Value="1" />
+    </UI>
+    <UIRef Id="WixUI_Common" />
+  </Fragment>
+
+  <!--Custom actions to modify toolkit link file and extension profiles-->
+  
+  <!--EventLog Registration-->
+  <Fragment>
+    <ComponentGroup Id="MFPEventLogRegistrations" Directory="MFPTARGETDIR">
+      <Component Id="MFP_EventLogRegistration" Guid="$(var.MFP_EVENT_LOG_GUID)" KeyPath="yes">
+        <util:EventSource Log="Application"
+                          Name="$(var.ProdName)"
+                          EventMessageFile="[MFPTARGETDIR]runtime\amd64_nt_4\messages\En_US\ABC Manufacturing Pack.dll"
+                          SupportsInformationals="yes"
+                          SupportsWarnings="yes"
+                          SupportsErrors="yes"/>
+
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <!-- Installed version/location registry value -->
+  <Fragment>
+    <DirectoryRef Id="RegMFPver_loc">
+      <Component Id="MFP_REG_VER_LOC$(var.VRMFnodots)" Guid="$(var.REG_VER_LOC_GUID)">
+        <RegistryKey Id="MFP_version_location_regkey"
+                     Root="HKLM"
+                     Key="SOFTWARE\Dummy\$(var.ProdName)\$(var.VRMFdots)"
+                     ForceCreateOnInstall="yes"
+                     ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string"
+                         Name="install_location"
+                         Value="[MFPTARGETDIR]"
+                         KeyPath="yes"/>
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
+    <ComponentGroup Id="MFP_RegMFPver_loc">
+      <ComponentRef Id="MFP_REG_VER_LOC$(var.VRMFnodots)" />
+    </ComponentGroup>
+
+	<!--CustomAction Id="ShowUninstallDialog" Impersonate="no" Script="vbscript" Execute="immediate" Return="check">
+    <![CDATA[
+        ' Show the custom dialog during uninstallation
+        Session.DoAction "SpawnDialog", "UninstallOptionsDlg"
+    ]]>
+	</CustomAction-->
+	<CustomAction Id="SetUninstallType"
+              Property="UNINSTALL_TYPE"
+              Value="[UNINSTALLTYPE]" />
+	
+	<!--<CustomAction Id="ShowUninstallOptions" BinaryKey="WixUIWixca" DllEntry="WixUIWixca:ShowUninstallOptionsDlg" Execute="immediate" Return="check" Impersonate="no"/>-->
+
+	<!--InstallUISequence>
+		<Show Dialog="UninstallOptionsDlg" After="CostFinalize">REMOVE="ALL"</Show>
+	</InstallUISequence-->
+
+	<!--InstallExecuteSequence>
+		<Custom Action="ShowUninstallOptions" After="InstallInitialize">REMOVE="ALL"</Custom>
+	</InstallExecuteSequence>-->
+	
+	<!--InstallExecuteSequence>
+		<Custom Action="ShowUninstallDialog" After="InstallInitialize">Installed AND NOT UPGRADINGPRODUCTCODE</Custom>
+		<Custom Action="SetUninstallType" After="InstallInitialize">Installed AND NOT UPGRADINGPRODUCTCODE</Custom>
+	</InstallExecuteSequence-->
+	
+	<!--CustomAction Id="ShowCustomUninstallDialog" Script="vbscript" Execute="immediate" Return="ignore">
+		<![CDATA[
+			Sub ShowCustomUninstallDialog()
+				Dim objShell, intResult
+				
+				' Create an instance of WScript.Shell
+				Set objShell = CreateObject("WScript.Shell")
+				
+				' Display a message box with options
+				intResult = objShell.Popup("Select an option:", 0, "Custom Uninstall Dialog", vbYesNoCancel + vbQuestion)
+				
+				' Process the result
+				Select Case intResult
+					Case vbYes
+						MsgBox "You selected: Option 1", vbOKOnly, "Selected Option"
+					Case vbNo
+						MsgBox "You selected: Option 2", vbOKOnly, "Selected Option"
+					Case vbCancel
+						MsgBox "You canceled the operation", vbOKOnly, "Operation Canceled"
+				End Select
+			End Sub
+		]]>
+	</CustomAction>
+
+	<InstallExecuteSequence>
+		<Custom Action="ShowCustomUninstallDialog" After="InstallInitialize">Installed AND NOT UPGRADINGPRODUCTCODE</Custom>
+	</InstallExecuteSequence-->
+  </Fragment>
+  
+
+</Wix>
