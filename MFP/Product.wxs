@@ -49,7 +49,7 @@
     <Condition Message="You must enter the directory in which ABC or Dummy XYZ is installed."><![CDATA[Installed OR PRECHECK_ABCTOOLSDIR]]></Condition>
     
     
-    <!--Check ABC and XYZ toolkit extended to manufacturing pack or not-->
+    <!--Check ABC and XYZ toolkit extended to Factory pack or not-->
     <Property Id="PRECHECK_ABCTOOLSLINKFILE">
       <DirectorySearch Id="ABCFolder2" Path="[XYZTARGETDIR]">
         <DirectorySearch Id="ABCToolsFolder" Path="tools">
@@ -169,7 +169,7 @@
       <Component Id="MFP_EventLogRegistration" Guid="$(var.MFP_EVENT_LOG_GUID)" KeyPath="yes">
         <util:EventSource Log="Application"
                           Name="$(var.ProdName)"
-                          EventMessageFile="[MFPTARGETDIR]runtime\amd64_nt_4\messages\En_US\ABC Manufacturing Pack.dll"
+                          EventMessageFile="[MFPTARGETDIR]runtime\amd64_nt_4\messages\En_US\ABC Factory Pack.dll"
                           SupportsInformationals="yes"
                           SupportsWarnings="yes"
                           SupportsErrors="yes"/>
