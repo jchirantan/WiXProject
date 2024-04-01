@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CreateMFPToolkitLinks")]
-[assembly: AssemblyDescription("Manage AAA v3 ACE Toolkit link files")]
+[assembly: AssemblyDescription("Manage AAA v3 Factory link files")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dummy")]
 [assembly: AssemblyProduct("Dummy Project")]
